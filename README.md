@@ -8,114 +8,109 @@
   </a>
 </p>
 
-# Skills For Real Engineers
+# 面向真实工程师的 Skills
 
-[![skills.sh](https://skills.sh/b/mattpocock/skills)](https://skills.sh/mattpocock/skills)
+[English](./README.en.md)
 
-My agent skills that I use every day to do real engineering - not vibe coding.
+[![skills.sh](https://skills.sh/b/Revontulet123/skills)](https://skills.sh/Revontulet123/skills)
 
-Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve.
+这是我日常用于真实工程工作的 agent skills 集合。它们关注工程质量、反馈循环和可维护性，而不是把代码生成当成一次性的碰运气。
 
-These skills are designed to be small, easy to adapt, and composable. They work with any model. They're based on decades of engineering experience. Hack around with them. Make them your own. Enjoy.
+真实应用很难做。GSD、BMAD、Spec-Kit 这类方法会尝试接管流程来降低复杂度，但代价往往是你失去控制，流程中的问题也更难定位和修复。
 
-If you want to keep up with changes to these skills, and any new ones I create, you can join ~60,000 other devs on my newsletter:
+这个仓库里的 skills 刻意保持小而清晰：容易改、容易组合，也不绑定特定模型。你可以直接使用，也可以按自己的项目习惯改造成更贴合团队的版本。
 
-[Sign Up To The Newsletter](https://www.aihero.dev/s/skills-newsletter)
+如果你想跟进上游技能的更新和作者新发布的内容，可以订阅 Matt Pocock 的 newsletter：
 
-## Quickstart (30-second setup)
+[订阅 Newsletter](https://www.aihero.dev/s/skills-newsletter)
 
-1. Run the skills.sh installer:
+## 快速开始
+
+1. 运行 skills.sh 安装器：
 
 ```bash
-npx skills@latest add mattpocock/skills
+npx skills@latest add Revontulet123/skills
 ```
 
-2. Pick the skills you want, and which coding agents you want to install them on. **Make sure you select `/setup-matt-pocock-skills`**.
+2. 选择要安装的 skills，以及要安装到哪些 coding agents。请确保选择 `/setup-matt-pocock-skills`。
 
-3. Run `/setup-matt-pocock-skills` in your agent. It will:
-   - Ask you which issue tracker you want to use (GitHub, Linear, or local files)
-   - Ask you what labels you apply to tickets when you triage them (`/triage` uses labels)
-   - Ask you where you want to save any docs we create
+3. 在你的 agent 里运行 `/setup-matt-pocock-skills`。它会询问：
+   - 你使用哪种 issue tracker：GitHub、Linear，或本地文件
+   - 你在 triage ticket 时会使用哪些标签，`/triage` 会依赖这些标签
+   - 生成的文档应该保存在哪里
 
-4. Bam - you're ready to go.
+4. 完成后就可以开始使用。
 
-## Why These Skills Exist
+## 为什么需要这些 Skills
 
-I built these skills as a way to fix common failure modes I see with Claude Code, Codex, and other coding agents.
+我把这些 skills 当作一组工程护栏，用来修复 Claude Code、Codex 和其他 coding agents 中常见的失败模式。
 
-### #1: The Agent Didn't Do What I Want
+### 1. Agent 没有真正理解我要什么
 
 > "No-one knows exactly what they want"
 >
 > David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
 
-**The Problem**. The most common failure mode in software development is misalignment. You think the dev knows what you want. Then you see what they've built - and you realize it didn't understand you at all.
+**问题**：软件开发里最常见的失败模式是对齐失败。你以为对方理解了需求，直到看到实现才发现它完全偏了。
 
-This is just the same in the AI age. There is a communication gap between you and the agent. The fix for this is a **grilling session** - getting the agent to ask you detailed questions about what you're building.
+AI 时代也是一样。你和 agent 之间天然存在沟通缺口。解决办法是先做一次 grilling session：让 agent 在动手前追问细节、挑战假设、逼近真正的问题边界。
 
-**The Fix** is to use:
+**对应 skills**：
 
-- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - for non-code uses
-- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - same as [`/grill-me`](./skills/productivity/grill-me/SKILL.md), but adds more goodies (see below)
+- [`/grill-me`](./skills/productivity/grill-me/SKILL.md)：适合非代码场景
+- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md)：在 `/grill-me` 的基础上加入工程文档能力
 
-These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them _every_ time you want to make a change.
+这两个是最常用的 skills。每次你准备让 agent 修改系统、设计功能或处理复杂任务前，都应该先用它们做需求对齐。
 
-### #2: The Agent Is Way Too Verbose
+### 2. Agent 说得太啰嗦
 
 > With a ubiquitous language, conversations among developers and expressions of the code are all derived from the same domain model.
 >
 > Eric Evans, [Domain-Driven-Design](https://www.amazon.co.uk/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
 
-**The Problem**: At the start of a project, devs and the people they're building the software for (the domain experts) are usually speaking different languages.
+**问题**：项目初期，开发者和领域专家经常不在同一套语言体系里。Agent 进入项目时也一样，它不知道哪些词是项目里的约定用语，于是只能用很长的解释去描述一个本该有名字的概念。
 
-I felt the same tension with my agents. Agents are usually dropped into a project and asked to figure out the jargon as they go. So they use 20 words where 1 will do.
-
-**The Fix** for this is a shared language. It's a document that helps agents decode the jargon used in the project.
+**解决办法**：建立共享语言。它是一份帮助 agent 理解项目术语、业务概念和架构决策的文档。
 
 <details>
-<summary>
-Example
-</summary>
+<summary>示例</summary>
 
-Here's an example [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md), from my `course-video-manager` repo. Which one is easier to read?
+这是来自 `course-video-manager` 仓库的一个 [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md) 示例。对比下面两种说法：
 
-- **BEFORE**: "There's a problem when a lesson inside a section of a course is made 'real' (i.e. given a spot in the file system)"
-- **AFTER**: "There's a problem with the materialization cascade"
+- **之前**：当课程分区中的一节课被变成“真实文件系统里的内容”时会出现问题
+- **之后**：materialization cascade 存在问题
 
-This concision pays off session after session.
+后一种表达更短，也更适合在一次又一次会话中复用。
 
 </details>
 
-This is built into [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md). It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
-
-It's hard to explain how powerful this is. It might be the single coolest technique in this repo. Try it, and see.
+[`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) 已经内置了这套做法。它不仅会追问需求，还会帮助你沉淀共享语言，并把难解释的决策写进 ADR。
 
 > [!TIP]
-> A shared language has many other benefits than reducing verbosity:
+> 共享语言的收益不只是减少啰嗦：
 >
-> - **Variables, functions and files are named consistently**, using the shared language
-> - As a result, the **codebase is easier to navigate** for the agent
-> - The agent also **spends fewer tokens on thinking**, because it has access to a more concise language
+> - 变量、函数和文件命名会更一致
+> - Agent 更容易在代码库里导航
+> - Agent 思考时消耗的 token 更少，因为它可以使用更精确的项目语言
 
-### #3: The Code Doesn't Work
+### 3. 代码跑不起来
 
 > "Always take small, deliberate steps. The rate of feedback is your speed limit. Never take on a task that’s too big."
 >
 > David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
 
-**The Problem**: Let's say that you and the agent are aligned on what to build. What happens when the agent _still_ produces crap?
+**问题**：就算你和 agent 已经对齐，它仍然可能产出不能运行、不可验证或不稳定的代码。
 
-It's time to look at your feedback loops. Without feedback on how the code it produces actually runs, the agent will be flying blind.
+这通常不是单纯的“模型不够强”，而是反馈循环太弱。没有类型检查、浏览器验证、自动化测试或可复现的调试路径，agent 就是在盲写。
 
-**The Fix**: You need the usual tranche of feedback loops: static types, browser access, and automated tests.
+**解决办法**：建立反馈循环。自动化测试尤其关键，红绿重构可以让 agent 先写一个失败测试，再让实现把测试跑绿，最后再整理设计。
 
-For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
+相关 skills：
 
-I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md) skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+- [`/tdd`](./skills/engineering/tdd/SKILL.md)：把 red-green-refactor 流程插入任何项目
+- [`/diagnose`](./skills/engineering/diagnose/SKILL.md)：用可复现、可观测、可回归的方式处理 bug 和性能问题
 
-For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/SKILL.md)** skill that wraps best debugging practices into a simple loop.
-
-### #4: We Built A Ball Of Mud
+### 4. 我们做出了难以维护的代码泥球
 
 > "Invest in the design of the system _every day_."
 >
@@ -125,52 +120,55 @@ For debugging, I've also built a **[`/diagnose`](./skills/engineering/diagnose/S
 >
 > John Ousterhout, [A Philosophy Of Software Design](https://www.amazon.co.uk/Philosophy-Software-Design-2nd/dp/173210221X)
 
-**The Problem**: Most apps built with agents are complex and hard to change. Because agents can radically speed up coding, they also accelerate software entropy. Codebases get more complex at an unprecedented rate.
+**问题**：Agent 可以显著加快写代码的速度，也会同步加快系统复杂度累积的速度。很多由 agent 参与构建的应用很快变得难以理解、难以修改、难以扩展。
 
-**The Fix** for this is a radical new approach to AI-powered development: caring about the design of the code.
+**解决办法**：把代码设计当成 AI-assisted development 的核心部分，而不是后续补救。
 
-This is built in to every layer of these skills:
+这些 skills 会从不同层面帮助你保持设计质量：
 
-- [`/to-prd`](./skills/engineering/to-prd/SKILL.md) quizzes you about which modules you're touching before creating a PRD
-- [`/zoom-out`](./skills/engineering/zoom-out/SKILL.md) tells the agent to explain code in the context of the whole system
+- [`/to-prd`](./skills/engineering/to-prd/SKILL.md)：在写 PRD 前追问会触碰哪些模块
+- [`/zoom-out`](./skills/engineering/zoom-out/SKILL.md)：让 agent 从系统层面解释陌生代码
+- [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md)：找出能让代码库更深、更稳、更清晰的架构改进机会
 
-And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
+### 小结
 
-### Summary
+软件工程基本功在 AI 时代更重要，而不是更不重要。这个仓库把一组可重复执行的工程实践压缩成 skills，目标是让 agent 更好地参与真实项目，而不是只生成看起来能工作的代码。
 
-Software engineering fundamentals matter more than ever. These skills are my best effort at condensing these fundamentals into repeatable practices, to help you ship the best apps of your career. Enjoy.
-
-## Reference
+## Skills 参考
 
 ### Engineering
 
-Skills I use daily for code work.
+日常代码工作中使用的 skills。
 
-- **[diagnose](./skills/engineering/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
-- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
-- **[triage](./skills/engineering/triage/SKILL.md)** — Triage issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.
-- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — Scaffold the per-repo config (issue tracker, triage label vocabulary, domain doc layout) that the other engineering skills consume. Run once per repo before using `to-issues`, `to-prd`, `triage`, `diagnose`, `tdd`, `improve-codebase-architecture`, or `zoom-out`.
-- **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[to-issues](./skills/engineering/to-issues/SKILL.md)** — Break any plan, spec, or PRD into independently-grabbable GitHub issues using vertical slices.
-- **[to-prd](./skills/engineering/to-prd/SKILL.md)** — Turn the current conversation context into a PRD and submit it as a GitHub issue. No interview — just synthesizes what you've already discussed.
-- **[zoom-out](./skills/engineering/zoom-out/SKILL.md)** — Tell the agent to zoom out and give broader context or a higher-level perspective on an unfamiliar section of code.
-- **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to flesh out a design — either a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.
+- **[diagnose](./skills/engineering/diagnose/SKILL.md)**：用于复杂 bug 和性能退化的诊断循环：复现、最小化、假设、插桩、修复、回归测试。
+- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)**：围绕现有领域模型挑战计划，打磨术语，并内联更新 `CONTEXT.md` 和 ADR。
+- **[triage](./skills/engineering/triage/SKILL.md)**：用一组 triage 角色状态机处理 issues。
+- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)**：结合 `CONTEXT.md` 里的领域语言和 `docs/adr/` 里的决策，寻找代码库架构加深机会。
+- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)**：为仓库生成 issue tracker、triage 标签词表、领域文档布局等配置。使用 `to-issues`、`to-prd`、`triage`、`diagnose`、`tdd`、`improve-codebase-architecture` 或 `zoom-out` 前先运行一次。
+- **[tdd](./skills/engineering/tdd/SKILL.md)**：用 red-green-refactor 流程进行测试驱动开发，按垂直切片构建功能或修复 bug。
+- **[to-issues](./skills/engineering/to-issues/SKILL.md)**：把计划、规格或 PRD 拆成可以独立领取的 GitHub issues。
+- **[to-prd](./skills/engineering/to-prd/SKILL.md)**：把当前对话上下文整理成 PRD，并作为 GitHub issue 提交。不再重新访谈，只综合已有讨论。
+- **[zoom-out](./skills/engineering/zoom-out/SKILL.md)**：让 agent 退一步，从系统整体角度解释陌生代码区域。
+- **[prototype](./skills/engineering/prototype/SKILL.md)**：构建一次性原型，用于澄清设计。可以是可运行的终端应用，也可以是在同一路由下切换的多种 UI 方案。
 
 ### Productivity
 
-General workflow tools, not code-specific.
+通用工作流工具，不局限于代码。
 
-- **[caveman](./skills/productivity/caveman/SKILL.md)** — Ultra-compressed communication mode. Cuts token usage ~75% by dropping filler while keeping full technical accuracy.
-- **[grill-me](./skills/productivity/grill-me/SKILL.md)** — Get relentlessly interviewed about a plan or design until every branch of the decision tree is resolved.
-- **[handoff](./skills/productivity/handoff/SKILL.md)** — Compact the current conversation into a handoff document so another agent can continue the work.
-- **[write-a-skill](./skills/productivity/write-a-skill/SKILL.md)** — Create new skills with proper structure, progressive disclosure, and bundled resources.
+- **[caveman](./skills/productivity/caveman/SKILL.md)**：极简压缩沟通模式，在保留技术准确性的前提下减少 token 消耗。
+- **[grill-me](./skills/productivity/grill-me/SKILL.md)**：围绕计划或设计进行高强度追问，直到关键分支都被澄清。
+- **[handoff](./skills/productivity/handoff/SKILL.md)**：把当前对话压缩成交接文档，方便另一个 agent 接手。
+- **[write-a-skill](./skills/productivity/write-a-skill/SKILL.md)**：按正确结构、渐进披露和资源打包方式创建新 skill。
 
 ### Misc
 
-Tools I keep around but rarely use.
+不常用但保留的辅助工具。
 
-- **[git-guardrails-claude-code](./skills/misc/git-guardrails-claude-code/SKILL.md)** — Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, etc.) before they execute.
-- **[migrate-to-shoehorn](./skills/misc/migrate-to-shoehorn/SKILL.md)** — Migrate test files from `as` type assertions to @total-typescript/shoehorn.
-- **[scaffold-exercises](./skills/misc/scaffold-exercises/SKILL.md)** — Create exercise directory structures with sections, problems, solutions, and explainers.
-- **[setup-pre-commit](./skills/misc/setup-pre-commit/SKILL.md)** — Set up Husky pre-commit hooks with lint-staged, Prettier, type checking, and tests.
+- **[git-guardrails-claude-code](./skills/misc/git-guardrails-claude-code/SKILL.md)**：为 Claude Code 设置 hooks，在危险 git 命令执行前拦截。
+- **[migrate-to-shoehorn](./skills/misc/migrate-to-shoehorn/SKILL.md)**：把测试文件里的 `as` 类型断言迁移到 `@total-typescript/shoehorn`。
+- **[scaffold-exercises](./skills/misc/scaffold-exercises/SKILL.md)**：创建包含章节、题目、答案和讲解的练习目录结构。
+- **[setup-pre-commit](./skills/misc/setup-pre-commit/SKILL.md)**：配置 Husky pre-commit hooks，集成 lint-staged、Prettier、类型检查和测试。
+
+## 上游项目
+
+本 fork 基于 [mattpocock/skills](https://github.com/mattpocock/skills)。英文原版首页保存在 [README.en.md](./README.en.md)。
